@@ -4,12 +4,15 @@ import NavBar from './components/navbar';
 import SearchBar from './components/searchBar';
 import Pokedex from './components/pokedex';
 import { getPokemonData, getPokemons } from './api';
+import FavoriteContext, { FavoriteProvider } from './contexts/favoritesContext';
+
 
 function App() {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const [pokemons, setPokemons] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const itensPerPage = 25;
 
 
@@ -30,16 +33,28 @@ function App() {
   };
 
   useEffect(() => {
-    console.log('carregou');
     fetchPokemons();
   }, [page]);
 
+  const updateFavoritePokemons = (name) => {
+    const updateFavorites = [...favorites]
+    const favoriteIndex = favorites.indexOf(name)
+    if(favoriteIndex >= 0) {
+      updateFavorites.splice(favoriteIndex, 1);
+    } else {
+      updateFavorites.push(name);
+    }
+    setFavorites(updateFavorites)
+  }
   return (
+    <FavoriteProvider value={{favoritePokemons: favorites, updateFavoritePokemons: updateFavoritePokemons}}>
     <div className="App">
       <NavBar />
       <SearchBar />
       <Pokedex pokemons={pokemons} loading={loading} page={page} totalPages={totalPages}  setPage={setPage} />
     </div>
+    </FavoriteProvider>
+   
   );
 }
 
