@@ -3,15 +3,16 @@ import './App.css';
 import NavBar from './components/navbar';
 import SearchBar from './components/searchBar';
 import Pokedex from './components/pokedex';
-import { getPokemonData, getPokemons } from './api';
+import { getPokemonData, getPokemons, searchPokeApi } from './api';
 import FavoriteContext, { FavoriteProvider } from './contexts/favoritesContext';
-
+import HeaderContainer from './components/headerContainer';
 const favoritesKey = "f"
 
 function App() {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const [pokemons, setPokemons] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const itensPerPage = 25;
@@ -19,6 +20,7 @@ function App() {
   const fetchPokemons = async () => {
     try {
       setLoading(true);
+      setNotFound(false);
       const data = await getPokemons(itensPerPage, itensPerPage * page);
       const promises = data.results.map(async (pokemon) => {
         return await getPokemonData(pokemon.url)
@@ -59,16 +61,36 @@ function App() {
     setFavorites(updateFavorites);
 
   }
+
+  const onSearchHandler = async (pokemon) => {
+    if (!pokemon) {
+      return fetchPokemons()
+    }
+    setLoading(true)
+    setNotFound(false)
+    const result = await searchPokeApi(pokemon)
+    if(!result) {
+      setNotFound(true)
+    } else {
+      setPokemons([result])
+      setPage(0)
+      setTotalPages(1)
+    }
+    setLoading(false)
+
+  }
   return (
     <FavoriteProvider value={{favoritePokemons: favorites, updateFavoritePokemons: updateFavoritePokemons}}>
-    <div className="App">
+      <HeaderContainer>
       <NavBar />
-      <SearchBar />
-      <Pokedex pokemons={pokemons} loading={loading} page={page} totalPages={totalPages}  setPage={setPage} />
-    </div>
+      <SearchBar onSearch={onSearchHandler}/>
+      </HeaderContainer>
+      {notFound ? (
+        <div className='notFound'>Not Found...</div>
+      ) :
+      (<Pokedex pokemons={pokemons} loading={loading} page={page} totalPages={totalPages}  setPage={setPage} />
+    )}
     </FavoriteProvider>
-   
   );
 }
-
 export default App;
