@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 /// feito pra testar o children
 const HeaderContainer = ({children}) => {
   return (

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useContext } from 'react';
 import FavoriteContext from '../contexts/favoritesContext';
+import PopupExample from './modal';
+
 
 const Pokemon = (props) => {
   const {favoritePokemons, updateFavoritePokemons} = useContext(FavoriteContext);
@@ -9,11 +11,10 @@ const Pokemon = (props) => {
     updateFavoritePokemons(pokemon.name)
   }
   const heart = favoritePokemons.includes(pokemon.name) ? "❤️" : "🤍"
-  return <div>
-    <div className='pokemon-card'>
-      <div className="pokemon-image">
-        <img className='pokemon-image-container' src={pokemon.sprites.other["official-artwork"].front_default} alt={pokemon.name} />
-      </div>
+  
+  return <div className='pokemons'>  
+    <div className='pokemon-card'> 
+    <PopupExample pokemon={pokemon}/>
       <div className="card-body">
         <div className="card-top">
           <h3>{pokemon.name}</h3>

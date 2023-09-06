@@ -20,10 +20,10 @@ const SearchBar = (props) => {
   return (
     <div className="pokeSearchContainer">
       <div className="searchPokemon">
-        <input placeholder="Search Pokemon" onChange={onChangePokemon} />
+        <input className='inputSearchPokemon' placeholder="Search Pokemon" onChange={onChangePokemon}/>
       </div>
       <div className="searchPokemonButton">
-        <button onClick={onClickButtonHandler}>Search</button>
+        <button className='button' onClick={onClickButtonHandler}>Search</button>
       </div>
     </div>
   );

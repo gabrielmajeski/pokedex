@@ -5,7 +5,7 @@ import Pagination from './pagination';
 const Pokedex = (props) => {
   const { pokemons, loading , page , totalPages, setPage} = props;
   const previousClickHandler = () => {
-    if(page > 0) {
+    if(page > 0 ) {
       setPage(page-1)
     }
   }
@@ -17,16 +17,35 @@ const Pokedex = (props) => {
   }
   return (
     <div  className='resultContainer'>
-      <div className="pokedex-header">
-        <Pagination
-          page={page+1}
-          totalPages={totalPages}
-          previousClick={previousClickHandler}
-          nextClick={nextClickHandler}
-        />
-      </div>
+
       {loading ? (
-        <div className=''>Carregando, aguarde um momento... </div>
+          <div className="card-loading is-loading">
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+           <div className="loading"></div>
+          </div>
       ) : (
         <div className="pokedex-grid">
           {pokemons &&
@@ -35,6 +54,15 @@ const Pokedex = (props) => {
             })}
         </div>
       )}
+            <div className="pokedex-header">
+  
+              <Pagination
+          page={page+1}
+          totalPages={totalPages}
+          previousClick={previousClickHandler}
+          nextClick={nextClickHandler}
+        />
+            </div>
     </div>
   );
 };

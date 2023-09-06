@@ -9,12 +9,15 @@ import HeaderContainer from './components/headerContainer';
 const favoritesKey = "f"
 
 function App() {
+
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [pokemons, setPokemons] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [isFirstLoadPage, setIsFirstLoadPage] = useState(true);
+
   const itensPerPage = 25;
 
   const fetchPokemons = async () => {
@@ -45,8 +48,12 @@ function App() {
 
 
   useEffect(() => {
-    fetchPokemons();
+    if(isFirstLoadPage === true) {
+      fetchPokemons();
+    }
   }, [page]);
+
+
 
 
   const updateFavoritePokemons = (name) => {
@@ -64,7 +71,10 @@ function App() {
 
   const onSearchHandler = async (pokemon) => {
     if (!pokemon) {
-      return fetchPokemons()
+      return fetchPokemons(
+        setPage(0),
+        setIsFirstLoadPage(true)
+      )
     }
     setLoading(true)
     setNotFound(false)
@@ -72,11 +82,20 @@ function App() {
     if(!result) {
       setNotFound(true)
     } else {
+      setIsFirstLoadPage(false)
       setPokemons([result])
-      setPage(0)
       setTotalPages(1)
+      setPage(0)
     }
     setLoading(false)
+
+  }
+
+  const notFoundPage = () => {
+    var pokemon = document.querySelector('.inputSearchPokemon');
+    pokemon.value = "";
+    setPage(0);
+    fetchPokemons();
 
   }
   return (
@@ -86,7 +105,11 @@ function App() {
       <SearchBar onSearch={onSearchHandler}/>
       </HeaderContainer>
       {notFound ? (
-        <div className='notFound'>Not Found...</div>
+        <div className='notFound'>
+          <p>404</p>
+          <p>Ditto don't know this shape... yet</p>
+          <button className='button' onClick={notFoundPage}>Go back</button>
+        </div>
       ) :
       (<Pokedex pokemons={pokemons} loading={loading} page={page} totalPages={totalPages}  setPage={setPage} />
     )}
