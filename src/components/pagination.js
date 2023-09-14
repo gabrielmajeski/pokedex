@@ -8,7 +8,7 @@ const Pagination = (props) => {
   return (
     <div className="pagination-container">
       <img src={previus} alt="previus button" onClick={previousClick} /><div></div>
-      <div>{page} of {totalPages}</div>
+      <div className="pagination-numbers">{page} of {totalPages}</div>
       <img src={next} alt="next button" onClick={nextClick} />
     </div>
   )

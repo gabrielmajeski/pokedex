@@ -1,7 +1,8 @@
 import React from 'react';
 import { useContext } from 'react';
 import FavoriteContext from '../contexts/favoritesContext';
-import PopupExample from './modal';
+import PopupPokemon from './modal';
+import { getTypeWeakness } from '../api';
 
 
 const Pokemon = (props) => {
@@ -11,10 +12,10 @@ const Pokemon = (props) => {
     updateFavoritePokemons(pokemon.name)
   }
   const heart = favoritePokemons.includes(pokemon.name) ? "❤️" : "🤍"
-  
+
   return <div className='pokemons'>  
     <div className='pokemon-card'> 
-    <PopupExample pokemon={pokemon}/>
+    <PopupPokemon pokemon={pokemon}/>
       <div className="card-body">
         <div className="card-top">
           <h3>{pokemon.name}</h3>

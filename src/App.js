@@ -9,7 +9,6 @@ import HeaderContainer from './components/headerContainer';
 const favoritesKey = "f"
 
 function App() {
-
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -17,7 +16,6 @@ function App() {
   const [pokemons, setPokemons] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [isFirstLoadPage, setIsFirstLoadPage] = useState(true);
-
   const itensPerPage = 25;
 
   const fetchPokemons = async () => {
@@ -46,15 +44,11 @@ function App() {
     loadFavoritePokemons();
   }, []);
 
-
   useEffect(() => {
     if(isFirstLoadPage === true) {
       fetchPokemons();
     }
   }, [page]);
-
-
-
 
   const updateFavoritePokemons = (name) => {
     const updateFavorites = [...favorites]
@@ -96,7 +90,6 @@ function App() {
     pokemon.value = "";
     setPage(0);
     fetchPokemons();
-
   }
   return (
     <FavoriteProvider value={{favoritePokemons: favorites, updateFavoritePokemons: updateFavoritePokemons}}>

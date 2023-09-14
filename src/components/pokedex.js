@@ -54,7 +54,7 @@ const Pokedex = (props) => {
             })}
         </div>
       )}
-            <div className="pokedex-header">
+            <div className="pokedex-pagination">
   
               <Pagination
           page={page+1}
