@@ -23,11 +23,11 @@ $ git clone https://github.com/gabrielmajeski/pokedex
 ```
 2. Install NPM
 ```
-$ yarn install
+$ npm install
 ```
 3. Start!
 ```
-$ yarn start
+$ npm start
 ```
 
 
